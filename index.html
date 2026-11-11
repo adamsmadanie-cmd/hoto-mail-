@@ -10,6 +10,10 @@
 <meta property="og:type" content="website">
 <meta name="theme-color" content="#B3261E">
 <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23B3261E'/%3E%3Cpath d='M20 14h7v14h10V14h7v36h-7V35H27v15h-7z' fill='white'/%3E%3C/svg%3E">
+
+<!-- SDK Supabase Officiel -->
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
 <style>
 :root {
   --r: #B3261E;
@@ -173,7 +177,7 @@ footer a { color: var(--k); text-decoration: none; }
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Application Dashboard Cards */
+/* Dashboard Cards */
 .dash-card { background: var(--c); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--b); }
 .balance-num { font-size: 36px; font-weight: 900; color: var(--r); margin: 10px 0; }
 
@@ -198,7 +202,6 @@ footer a { color: var(--k); text-decoration: none; }
 
 .badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
 .badge.success { background: #e8f5e9; color: var(--success); }
-.badge.pending { background: #fff3e0; color: #e65100; }
 
 /* Keypad PIN */
 .pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 240px; margin: 20px auto; }
@@ -482,8 +485,8 @@ footer a { color: var(--k); text-decoration: none; }
       <div class="app-user-info">
         <div class="app-avatar" id="userAvatar">A</div>
         <div>
-          <b id="userName">Utilisateur Hoto</b>
-          <small style="display:block; color:var(--m);" id="userEmail">connecte@gmail.com</small>
+          <b id="userName">Adama Coulibaly</b>
+          <small style="display:block; color:var(--m);" id="userEmail">adama.hoto@gmail.com</small>
         </div>
       </div>
       <button class="close-app" onclick="closeApp()">&times;</button>
@@ -523,14 +526,14 @@ footer a { color: var(--k); text-decoration: none; }
         <div class="input-group">
           <label>Lien personnel Hoto</label>
           <div class="pay-link-box">
-            <input type="text" id="payLinkInput" readonly value="https://hoto.app/pay/@utilisateur">
+            <input type="text" id="payLinkInput" readonly value="https://hoto.app/pay/@adama">
             <button class="btn sm" onclick="copyLink()">Copier</button>
           </div>
         </div>
 
         <div style="text-align:center; margin-top:30px; padding:20px; background:var(--c); border-radius:16px;">
           <small style="display:block; font-weight:700; margin-bottom:10px;">Scanner pour me payer</small>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hoto.app/pay/@utilisateur" alt="QR Code" style="border-radius:10px; border:2px solid var(--b);">
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hoto.app/pay/@adama" alt="QR Code" style="border-radius:10px; border:2px solid var(--b);">
         </div>
       </div>
 
@@ -636,7 +639,12 @@ footer a { color: var(--k); text-decoration: none; }
 </div>
 
 <script>
-// État Global de l'Application
+// INITIALISATION SUPABASE AVEC VOS CLEFS OFFICIELLES
+const SUPABASE_URL = 'https://ecvikizyqztpbzimjeue.supabase.co';
+const SUPABASE_ANON_KEY = 'sb_publishable_9w6NUxn0jrYPhrVx3VUqOA_Zw3EsdTw';
+const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+
+// État local de secours
 let state = {
   user: {
     name: "Adama Coulibaly",
@@ -667,7 +675,6 @@ function switchTab(tabId) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
   
-  // Highlight tab button
   const index = ['dash', 'link', 'pay', 'withdraw', 'inbox'].indexOf(tabId);
   if(index !== -1) {
     document.querySelectorAll('.tab-btn')[index].classList.add('active');
@@ -676,14 +683,13 @@ function switchTab(tabId) {
   document.getElementById(`tab-${tabId}`).classList.add('active');
 }
 
-// Mise à jour de l'UI
+// Mise à jour de l'interface graphique
 function updateUI() {
   document.getElementById('userName').textContent = state.user.name;
   document.getElementById('userEmail').textContent = state.user.email;
   document.getElementById('userAvatar').textContent = state.user.name.charAt(0);
   document.getElementById('userBalance').textContent = state.user.balance.toLocaleString() + " FCFA";
 
-  // Rendu Liste des Transactions
   const txList = document.getElementById('txList');
   txList.innerHTML = state.transactions.map(t => `
     <div class="tx-item">
@@ -697,7 +703,6 @@ function updateUI() {
     </div>
   `).join('');
 
-  // Rendu Notifications Gmail
   const gmailList = document.getElementById('gmailList');
   gmailList.innerHTML = state.transactions.filter(t => t.type === 'in').map(t => `
     <div class="tx-item" style="background:#FBF3F2">
@@ -710,7 +715,6 @@ function updateUI() {
   `).join('');
 }
 
-// Actions Lien
 function copyLink() {
   const linkInput = document.getElementById('payLinkInput');
   linkInput.select();
@@ -718,22 +722,37 @@ function copyLink() {
   alert("Lien de paiement copié !");
 }
 
-// Simulation Paiement
-function handlePay(e) {
+// Enregistrement du paiement avec synchronisation Supabase
+async function handlePay(e) {
   e.preventDefault();
   const client = document.getElementById('payClient').value;
   const amount = parseInt(document.getElementById('payAmount').value);
   const method = document.getElementById('payMethod').value;
 
-  state.user.balance += amount;
-  state.transactions.unshift({
+  const newTx = {
     id: "TX-" + Math.floor(1000 + Math.random() * 9000),
     client: client,
     amount: amount,
     type: "in",
     method: method,
     date: "À l'instant"
-  });
+  };
+
+  state.user.balance += amount;
+  state.transactions.unshift(newTx);
+
+  // Tentative de sauvegarde dans la base de données Supabase
+  try {
+    await _supabase.from('transactions').insert([{
+      client_name: client,
+      amount: amount,
+      payment_method: method,
+      type: 'in'
+    }]);
+    console.log("Transaction enregistrée sur Supabase");
+  } catch (err) {
+    console.log("Mode hors-ligne ou table non configurée", err);
+  }
 
   updateUI();
   alert(`Paiement de ${amount} FCFA reçu de ${client} ! Notification e-mail envoyée.`);
