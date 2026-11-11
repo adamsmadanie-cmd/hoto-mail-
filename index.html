@@ -1,67 +1,808 @@
 <!doctype html>
-<html lang="fr"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1">
+<html lang="fr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Hoto – Recevez de l’argent partout, dans votre boîte Gmail</title>
-<meta name="description" content="Hoto : un lien de paiement personnel, des paiements Mobile Money et carte du monde entier, et une notification dans votre Gmail à chaque paiement.">
+<meta name="description" content="Hoto : un lien de paiement personnel, des paiements Mobile Money et carte du monde entier, et un e-mail dans votre Gmail à chaque paiement reçu.">
+<meta property="og:title" content="Hoto – Recevez de l’argent partout, dans votre boîte Gmail">
+<meta property="og:description" content="Lien de paiement personnel, Mobile Money et cartes, notification Gmail à chaque paiement.">
+<meta property="og:type" content="website">
+<meta name="theme-color" content="#B3261E">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23B3261E'/%3E%3Cpath d='M20 14h7v14h10V14h7v36h-7V35H27v15h-7z' fill='white'/%3E%3C/svg%3E">
 <style>
-:root{--r:#B3261E;--rd:#8F1D17;--k:#C3B091;--kd:#6B5F3A;--c:#F4EFE2;--t:#2B2620;--m:#5A5243;--b:#E6DCC3}
-*{box-sizing:border-box}html{scroll-behavior:smooth}
-body{margin:0;font-family:Inter,system-ui,Arial,sans-serif;color:var(--t);background:#fff;line-height:1.55}
-:focus-visible{outline:3px solid var(--kd);outline-offset:2px}
-.wrap{max-width:1040px;margin:0 auto;padding:0 20px}
-header{position:sticky;top:0;z-index:5;background:#fff;border-bottom:1px solid var(--b)}
-header .wrap{display:flex;align-items:center;gap:12px;min-height:64px}
-.logo{width:40px;height:40px;border-radius:12px;background:var(--r);color:#fff;font-weight:800;font-size:22px;display:flex;align-items:center;justify-content:center}
-header b{font-size:20px;color:var(--r);flex:1}
-.btn{min-height:48px;padding:0 22px;border-radius:12px;background:var(--r);color:#fff;font-weight:700;text-decoration:none;display:inline-flex;align-items:center;justify-content:center}
-.btn:hover{background:var(--rd)}.btn.off{background:var(--kd);pointer-events:none}
-.hero{background:var(--c);padding:56px 0}
-.hero h1{margin:0 0 14px;font-size:clamp(30px,6vw,48px);line-height:1.1}.hero h1 span{color:var(--r)}
-.hero p{margin:0 0 24px;max-width:600px;font-size:18px;color:var(--m)}
-.status{margin-top:14px;font-size:14px;font-weight:700;color:var(--kd)}
-section{padding:48px 0}h2{margin:0 0 20px;font-size:28px}
-.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(250px,1fr));gap:18px}
-.card{background:#fff;border:2px solid var(--b);border-radius:16px;padding:22px}
-.card h3{margin:0 0 8px;font-size:18px}.card p{margin:0;color:var(--m)}
-.n{width:36px;height:36px;border-radius:50%;background:var(--r);color:#fff;font-weight:800;display:flex;align-items:center;justify-content:center;margin-bottom:12px}
-.alt{background:var(--c)}.alt .card{border-color:var(--k)}
-ul{margin:0;padding-left:20px;color:var(--m)}li{margin:6px 0}
-.note{background:var(--b);border-radius:12px;padding:14px 18px;margin-top:20px}
-footer{background:var(--t);color:#fff;padding:28px 0;font-size:14px}footer a{color:var(--k)}
-</style></head><body>
-<header><div class="wrap"><div class="logo">H</div><b>Hoto</b><a class="btn" data-app href="#">Ouvrir Hoto</a></div></header>
+:root {
+  --r: #B3261E;
+  --rd: #8F1D17;
+  --k: #C3B091;
+  --kd: #6B5F3A;
+  --c: #F4EFE2;
+  --t: #2B2620;
+  --m: #5A5243;
+  --b: #E6DCC3;
+  --rad: 16px;
+  --success: #2e7d32;
+}
 
-<div class="hero"><div class="wrap">
-<h1>Recevez de l’argent partout, <span>dans votre boîte Gmail</span>.</h1>
-<p>Connectez-vous avec Gmail, partagez votre lien de paiement et soyez payé par Mobile Money ou par carte, depuis l’Afrique, les Amériques, l’Europe, l’Asie et l’Océanie.</p>
-<a class="btn" data-app href="#">Ouvrir Hoto</a><div class="status" id="status" hidden>L’application est en cours de mise en service. Elle sera accessible ici dès son ouverture.</div>
-</div></div>
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+body {
+  margin: 0;
+  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
+  color: var(--t);
+  background: #fff;
+  line-height: 1.6;
+  -webkit-font-smoothing: antialiased;
+}
 
-<section><div class="wrap"><h2>Comment ça marche</h2><div class="grid">
-<div class="card"><div class="n">1</div><h3>Connexion avec Gmail</h3><p>Un compte en 1 clic avec votre compte Google. Votre nom et votre photo de profil sont repris automatiquement.</p></div>
-<div class="card"><div class="n">2</div><h3>Votre lien de paiement</h3><p>Vous recevez un lien personnel à partager. La personne qui vous paie choisit sa devise et son moyen de paiement.</p></div>
-<div class="card"><div class="n">3</div><h3>Notification Gmail et retrait</h3><p>Chaque paiement confirmé arrive par e-mail dans votre Gmail. Vous retirez ensuite vers votre Mobile Money, avec votre code PIN.</p></div>
-</div></div></section>
+:focus-visible { outline: 3px solid var(--kd); outline-offset: 3px; border-radius: 6px; }
+a { color: inherit; }
+.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
+.skip { position: absolute; left: -999px; top: 8px; background: #fff; padding: 8px 14px; border-radius: 8px; z-index: 20; }
+.skip:focus { left: 8px; }
 
-<section class="alt"><div class="wrap"><h2>Payé depuis tous les continents</h2><div class="grid">
-<div class="card"><h3>Afrique</h3><p>Mobile Money et carte, via Flutterwave : franc CFA (XOF, XAF), cedi, shilling kényan, naira, shilling ougandais et tanzanien, franc rwandais, rand, kwacha.</p></div>
-<div class="card"><h3>Amériques, Europe, Asie, Océanie</h3><p>Carte, Apple Pay et Google Pay, via Stripe : dollar, euro, livre, yen, dollar canadien, australien, néo-zélandais et singapourien, real, peso, roupie, dirham, franc suisse et autres.</p></div>
+/* En-tête */
+header { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--b); }
+.bar { display: flex; align-items: center; gap: 20px; min-height: 68px; }
+.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 22px; color: var(--r); cursor: pointer; }
+.logo { width: 38px; height: 38px; border-radius: 11px; background: var(--r); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 900; }
+nav { display: flex; gap: 6px; margin-left: auto; align-items: center; flex-wrap: wrap; }
+nav a { padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; color: var(--m); }
+nav a:hover { background: var(--c); color: var(--t); }
+nav a.btn { color: #fff; margin-left: 6px; }
+nav a.btn:hover { background: var(--rd); color: #fff; }
+
+.btn {
+  min-height: 48px;
+  padding: 0 24px;
+  border-radius: 12px;
+  background: var(--r);
+  color: #fff;
+  font-weight: 700;
+  text-decoration: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border: 2px solid var(--r);
+  transition: all .15s ease;
+  cursor: pointer;
+  font-size: 15px;
+}
+.btn:hover { background: var(--rd); border-color: var(--rd); }
+.btn.o { background: #fff; color: var(--r); }
+.btn.o:hover { background: var(--c); }
+.btn.off { background: var(--kd); border-color: var(--kd); pointer-events: none; }
+.btn.sm { min-height: 38px; padding: 0 14px; font-size: 13px; border-radius: 8px; }
+
+/* Hero */
+.hero { background: linear-gradient(180deg, var(--c), #fff); padding: 64px 0 72px; }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
+.tag { display: inline-block; background: var(--b); color: var(--kd); font-weight: 700; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; padding: 6px 12px; border-radius: 20px; margin-bottom: 16px; }
+h1 { margin: 0 0 18px; font-size: clamp(32px, 5.2vw, 54px); line-height: 1.08; letter-spacing: -.02em; }
+h1 span { color: var(--r); }
+.lead { font-size: 19px; color: var(--m); margin: 0 0 28px; max-width: 560px; }
+.cta { display: flex; gap: 12px; flex-wrap: wrap; }
+.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px; }
+.chips span { background: #fff; border: 1px solid var(--b); border-radius: 20px; padding: 6px 14px; font-size: 14px; font-weight: 600; color: var(--m); }
+
+/* Téléphone Démo */
+.phone { width: 290px; margin: 0 auto; background: var(--t); border-radius: 38px; padding: 12px; box-shadow: 0 24px 60px rgba(43,38,32,.25); }
+.screen { background: #fff; border-radius: 28px; overflow: hidden; min-height: 480px; display: flex; flex-direction: column; }
+.screen .top { background: var(--r); color: #fff; padding: 20px 18px 14px; display: flex; align-items: center; gap: 10px; font-weight: 800; }
+.screen .top i { width: 26px; height: 26px; border-radius: 8px; background: #fff; color: var(--r); font-style: normal; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
+.mail { padding: 14px 16px; border-bottom: 1px solid var(--c); display: flex; gap: 12px; align-items: center; }
+.mail .a { width: 38px; height: 38px; border-radius: 50%; background: var(--k); flex: none; display: flex; align-items: center; justify-content: center; font-weight: 800; }
+.mail b { display: block; font-size: 14px; }
+.mail small { display: block; color: var(--m); font-size: 12px; }
+.bar2 { height: 9px; border-radius: 5px; background: var(--b); margin-top: 7px; }
+.mail.n { background: #FBF3F2; }
+.mail.n .a { background: var(--r); color: #fff; }
+.sw { margin: 16px; display: flex; flex-direction: column; gap: 10px; }
+.sw div { height: 44px; border-radius: 12px; background: var(--c); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: var(--m); cursor: pointer; }
+.sw div.r { background: var(--r); color: #fff; }
+
+/* Sections */
+section { padding: 72px 0; }
+.alt { background: var(--c); }
+.head { max-width: 640px; margin: 0 0 36px; }
+.head h2 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); line-height: 1.15; letter-spacing: -.01em; }
+.head p { margin: 0; color: var(--m); font-size: 17px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
+.card { background: #fff; border: 2px solid var(--b); border-radius: var(--rad); padding: 26px; }
+.alt .card { border-color: var(--k); }
+.card h3 { margin: 0 0 8px; font-size: 19px; }
+.card p { margin: 0; color: var(--m); }
+.n { width: 40px; height: 40px; border-radius: 50%; background: var(--r); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.ic { width: 44px; height: 44px; border-radius: 12px; background: var(--c); color: var(--r); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
+.ic svg { width: 24px; height: 24px; }
+.conts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; }
+.cont { background: #fff; border-radius: var(--rad); padding: 20px; border-top: 5px solid var(--r); }
+.cont:nth-child(even) { border-top-color: var(--kd); }
+.cont h3 { margin: 0 0 6px; font-size: 17px; }
+.cont p { margin: 0; font-size: 14px; color: var(--m); }
+.note { background: var(--b); border-radius: 12px; padding: 16px 20px; margin-top: 24px; color: var(--t); font-size: 14px; }
+.sec { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px 28px; list-style: none; padding: 0; margin: 0; }
+.sec li { display: flex; gap: 12px; align-items: flex-start; color: var(--m); }
+.sec svg { flex: none; width: 24px; height: 24px; color: var(--r); margin-top: 2px; }
+
+details { background: #fff; border: 2px solid var(--b); border-radius: 12px; margin-bottom: 12px; }
+summary { cursor: pointer; padding: 18px 22px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
+summary::after { content: "+"; color: var(--r); font-size: 22px; line-height: 1; }
+details[open] summary::after { content: "−"; }
+details p { margin: 0; padding: 0 22px 20px; color: var(--m); }
+
+.band { background: var(--r); color: #fff; text-align: center; padding: 64px 0; }
+.band h2 { margin: 0 0 12px; font-size: clamp(26px, 4vw, 36px); }
+.band p { margin: 0 0 24px; opacity: .95; }
+.band .btn { background: #fff; color: var(--r); border-color: #fff; }
+
+footer { background: var(--t); color: #E8E2D2; padding: 36px 0; font-size: 14px; }
+footer .wrap { display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
+footer a { color: var(--k); text-decoration: none; }
+
+/* Modal & Application Interface */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(43, 38, 32, 0.7);
+  backdrop-filter: blur(6px);
+  z-index: 100;
+  display: flex; align-items: center; justify-content: center;
+  padding: 20px;
+  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+}
+.modal-overlay.active { opacity: 1; pointer-events: auto; }
+
+.app-box {
+  background: #fff; border-radius: 24px; max-width: 900px; width: 100%;
+  max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  display: flex; flex-direction: column; position: relative;
+}
+.app-header {
+  background: var(--c); padding: 16px 24px; border-bottom: 1px solid var(--b);
+  display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5;
+}
+.app-user-info { display: flex; align-items: center; gap: 12px; }
+.app-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--r); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 16px; }
+.close-app { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--m); font-weight: 700; }
+
+.app-body { padding: 24px; }
+.tab-nav { display: flex; gap: 8px; border-bottom: 2px solid var(--c); margin-bottom: 24px; overflow-x: auto; }
+.tab-btn { padding: 10px 18px; border: none; background: none; font-weight: 700; color: var(--m); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
+.tab-btn.active { color: var(--r); border-bottom-color: var(--r); }
+
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+
+/* Application Dashboard Cards */
+.dash-card { background: var(--c); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--b); }
+.balance-num { font-size: 36px; font-weight: 900; color: var(--r); margin: 10px 0; }
+
+.input-group { margin-bottom: 16px; }
+.input-group label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 14px; }
+.input-group input, .input-group select {
+  width: 100%; padding: 12px 16px; border-radius: 10px; border: 2px solid var(--b);
+  font-family: inherit; font-size: 15px; outline: none;
+}
+.input-group input:focus, .input-group select:focus { border-color: var(--r); }
+
+.pay-link-box { display: flex; gap: 8px; }
+.pay-link-box input { flex: 1; background: #fff; font-weight: 600; color: var(--kd); }
+
+.tx-list { display: flex; flex-direction: column; gap: 10px; }
+.tx-item { background: #fff; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--b); display: flex; align-items: center; justify-content: space-between; }
+.tx-info b { display: block; font-size: 15px; }
+.tx-info small { color: var(--m); font-size: 12px; }
+.tx-amount { font-weight: 800; font-size: 16px; }
+.tx-amount.in { color: var(--success); }
+.tx-amount.out { color: var(--r); }
+
+.badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
+.badge.success { background: #e8f5e9; color: var(--success); }
+.badge.pending { background: #fff3e0; color: #e65100; }
+
+/* Keypad PIN */
+.pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 240px; margin: 20px auto; }
+.pin-btn { height: 50px; border-radius: 12px; border: 2px solid var(--b); background: #fff; font-size: 20px; font-weight: 800; cursor: pointer; }
+.pin-btn:hover { background: var(--c); }
+.pin-dots { display: flex; justify-content: center; gap: 12px; margin: 15px 0; }
+.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--r); }
+.pin-dot.filled { background: var(--r); }
+
+@media(max-width:860px){
+  .hero .wrap { grid-template-columns: 1fr; }
+  .hero { padding: 40px 0 56px; }
+  nav a:not(.btn) { display: none; }
+  section { padding: 52px 0; }
+}
+</style>
+</head>
+<body>
+
+<a class="skip" href="#contenu">Aller au contenu</a>
+
+<header>
+  <div class="wrap bar">
+    <a class="brand" onclick="window.scrollTo(0,0)">
+      <span class="logo">H</span>Hoto
+    </a>
+    <nav aria-label="Navigation principale">
+      <a href="#fonctionnement">Fonctionnement</a>
+      <a href="#fonctions">Fonctions</a>
+      <a href="#monde">Devises</a>
+      <a href="#securite">Sécurité</a>
+      <a href="#faq">FAQ</a>
+      <a class="btn" onclick="openApp()">Ouvrir Hoto</a>
+    </nav>
+  </div>
+</header>
+
+<main id="contenu">
+  <div class="hero">
+    <div class="wrap">
+      <div>
+        <span class="tag">Gmail · Mobile Money · Cartes</span>
+        <h1>Recevez de l’argent partout, <span>dans votre boîte Gmail</span>.</h1>
+        <p class="lead">Connectez-vous avec Gmail, partagez votre lien de paiement et soyez payé par Mobile Money ou par carte, depuis l’Afrique, les Amériques, l’Europe, l’Asie et l’Océanie.</p>
+        <div class="cta">
+          <button class="btn" onclick="openApp()">Ouvrir Hoto</button>
+          <a class="btn o" href="#fonctionnement">Comment ça marche</a>
+        </div>
+        <div class="chips">
+          <span>Compte en 1 clic</span>
+          <span>Photo de profil Google</span>
+          <span>Retrait avec code PIN</span>
+        </div>
+      </div>
+      <div class="phone" aria-hidden="true">
+        <div class="screen">
+          <div class="top"><i>H</i>Hoto</div>
+          <div class="mail n">
+            <div class="a">$</div>
+            <div>
+              <b>Hoto : paiement reçu</b>
+              <small>Dans votre boîte Gmail</small>
+              <div class="bar2" style="width:140px"></div>
+            </div>
+          </div>
+          <div class="mail">
+            <div class="a">M</div>
+            <div>
+              <b>Paiement Mobile Money</b>
+              <div class="bar2" style="width:150px"></div>
+              <div class="bar2" style="width:100px"></div>
+            </div>
+          </div>
+          <div class="mail">
+            <div class="a">C</div>
+            <div>
+              <b>Paiement par carte</b>
+              <div class="bar2" style="width:130px"></div>
+              <div class="bar2" style="width:90px"></div>
+            </div>
+          </div>
+          <div class="sw">
+            <div class="r" onclick="openApp('withdraw')">Retirer vers Mobile Money</div>
+            <div onclick="openApp('link')">Copier mon lien de paiement</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <section id="fonctionnement">
+    <div class="wrap">
+      <div class="head">
+        <h2>Comment ça marche</h2>
+        <p>Trois étapes, sans formulaire interminable.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="n">1</div>
+          <h3>Connectez-vous avec Gmail</h3>
+          <p>Un compte en 1 clic avec votre compte Google. Votre nom et votre photo de profil sont repris automatiquement.</p>
+        </div>
+        <div class="card">
+          <div class="n">2</div>
+          <h3>Partagez votre lien</h3>
+          <p>Vous recevez un lien de paiement personnel. La personne qui vous paie choisit sa devise et son moyen de paiement.</p>
+        </div>
+        <div class="card">
+          <div class="n">3</div>
+          <h3>Recevez et retirez</h3>
+          <p>Chaque paiement confirmé arrive par e-mail dans votre Gmail. Vous retirez vers votre Mobile Money avec votre code PIN.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="fonctions" class="alt">
+    <div class="wrap">
+      <div class="head">
+        <h2>Tout ce qu’il faut pour être payé</h2>
+        <p>Un outil simple, pensé pour les indépendants, les boutiques et les familles.</p>
+      </div>
+      <div class="grid">
+        <div class="card">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>
+          </div>
+          <h3>Compte en 1 clic</h3>
+          <p>Connexion avec Google, adresse et lien de paiement créés automatiquement.</p>
+        </div>
+        <div class="card">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>
+          </div>
+          <h3>Lien de paiement personnel</h3>
+          <p>Un seul lien à envoyer par message, réseau social ou e-mail.</p>
+        </div>
+        <div class="card">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
+          </div>
+          <h3>Notification Gmail</h3>
+          <p>Un e-mail « paiement reçu » dans votre boîte à chaque paiement confirmé.</p>
+        </div>
+        <div class="card">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
+          </div>
+          <h3>Mobile Money et cartes</h3>
+          <p>Mobile Money et carte en Afrique ; carte, Apple Pay et Google Pay ailleurs.</p>
+        </div>
+        <div class="card">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
+          </div>
+          <h3>Plusieurs devises</h3>
+          <p>Vous recevez dans la devise de votre client : franc CFA, euro, dollar, livre, yen et bien d’autres.</p>
+        </div>
+        <div class="card">
+          <div class="ic">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
+          </div>
+          <h3>Retrait protégé par PIN</h3>
+          <p>Chaque retrait demande votre code PIN, avec blocage après trois erreurs.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="monde">
+    <div class="wrap">
+      <div class="head">
+        <h2>Payé depuis tous les continents</h2>
+        <p>Deux partenaires de paiement reconnus se partagent le monde.</p>
+      </div>
+      <div class="conts">
+        <div class="cont">
+          <h3>Afrique</h3>
+          <p>Mobile Money et carte, via Flutterwave. Franc CFA (XOF, XAF), cedi, shilling, naira, franc rwandais, rand, kwacha.</p>
+        </div>
+        <div class="cont">
+          <h3>Amériques</h3>
+          <p>Carte, Apple Pay et Google Pay, via Stripe. Dollar américain et canadien, real, peso mexicain.</p>
+        </div>
+        <div class="cont">
+          <h3>Europe</h3>
+          <p>Carte, Apple Pay et Google Pay, via Stripe. Euro, livre, franc suisse, couronnes suédoise, norvégienne et danoise.</p>
+        </div>
+        <div class="cont">
+          <h3>Asie</h3>
+          <p>Carte, via Stripe. Yen, roupie, dollar de Singapour et de Hong Kong, dirham.</p>
+        </div>
+        <div class="cont">
+          <h3>Océanie</h3>
+          <p>Carte, via Stripe. Dollar australien et néo-zélandais.</p>
+        </div>
+      </div>
+      <div class="note">
+        Gmail ne déplace pas l’argent : il sert à la connexion et aux notifications. Les paiements sont traités par Stripe et Flutterwave, et les moyens disponibles dépendent du pays du compte.
+      </div>
+    </div>
+  </section>
+
+  <section id="securite" class="alt">
+    <div class="wrap">
+      <div class="head">
+        <h2>La sécurité avant tout</h2>
+        <p>Des règles strictes pour protéger chaque paiement.</p>
+      </div>
+      <ul class="sec">
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Hoto ne voit jamais vos données de carte : elles sont saisies chez Stripe ou Flutterwave.
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Chaque paiement est vérifié auprès du fournisseur avant d’être crédité, et jamais crédité deux fois.
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Les retraits demandent votre code PIN. Après 3 erreurs, le compte est bloqué 15 minutes.
+        </li>
+        <li>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
+          Connexion par Google, session protégée et connexion en HTTPS.
+        </li>
+      </ul>
+    </div>
+  </section>
+
+  <section id="faq">
+    <div class="wrap">
+      <div class="head">
+        <h2>Questions fréquentes</h2>
+      </div>
+      <div style="max-width:760px">
+        <details>
+          <summary>Gmail envoie-t-il l’argent ?</summary>
+          <p>Non. Gmail sert à vous connecter et à vous notifier. L’argent passe par Stripe et Flutterwave, des services de paiement spécialisés.</p>
+        </details>
+        <details>
+          <summary>Quels sont les frais ?</summary>
+          <p>Hoto prélève des frais de service (1 % par défaut) sur les paiements reçus et les retraits, en plus des frais propres à Stripe et Flutterwave.</p>
+        </details>
+        <details>
+          <summary>Mon pays est-il pris en charge ?</summary>
+          <p>Cela dépend des devises et des moyens de paiement disponibles chez Stripe et Flutterwave pour votre pays. La liste des devises est indiquée plus haut.</p>
+        </details>
+        <details>
+          <summary>Comment retirer mon argent ?</summary>
+          <p>Depuis l’onglet « Retirer », vers un compte Mobile Money, après saisie de votre code PIN.</p>
+        </details>
+        <details>
+          <summary>Puis-je installer Hoto sur mon téléphone ?</summary>
+          <p>Oui. Ouvrez l’application dans votre navigateur et choisissez « Ajouter à l’écran d’accueil ».</p>
+        </details>
+      </div>
+    </div>
+  </section>
+
+  <div class="band">
+    <div class="wrap">
+      <h2>Commencez à recevoir de l’argent</h2>
+      <p>Un compte en 1 clic avec Gmail.</p>
+      <button class="btn" onclick="openApp()">Ouvrir Hoto</button>
+    </div>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><b>Hoto</b> · Boîte Gmail et paiements</div>
+    <div>Rouge, blanc et kaki · <a onclick="openApp()">Ouvrir l’application</a></div>
+  </div>
+</footer>
+
+<!-- Application Interactive Modal -->
+<div class="modal-overlay" id="appModal">
+  <div class="app-box">
+    <div class="app-header">
+      <div class="app-user-info">
+        <div class="app-avatar" id="userAvatar">A</div>
+        <div>
+          <b id="userName">Utilisateur Hoto</b>
+          <small style="display:block; color:var(--m);" id="userEmail">connecte@gmail.com</small>
+        </div>
+      </div>
+      <button class="close-app" onclick="closeApp()">&times;</button>
+    </div>
+
+    <div class="app-body">
+      <div class="tab-nav">
+        <button class="tab-btn active" onclick="switchTab('dash')">Tableau de bord</button>
+        <button class="tab-btn" onclick="switchTab('link')">Mon Lien</button>
+        <button class="tab-btn" onclick="switchTab('pay')">Simuler un Paiement</button>
+        <button class="tab-btn" onclick="switchTab('withdraw')">Retirer</button>
+        <button class="tab-btn" onclick="switchTab('inbox')">Gmail Notifications</button>
+      </div>
+
+      <!-- Tab Dashboard -->
+      <div class="tab-content active" id="tab-dash">
+        <div class="dash-card">
+          <small style="font-weight:700; text-transform:uppercase; color:var(--m);">Solde disponible</small>
+          <div class="balance-num" id="userBalance">15 000 FCFA</div>
+          <div style="display:flex; gap:10px;">
+            <button class="btn sm" onclick="switchTab('withdraw')">Retirer des fonds</button>
+            <button class="btn sm o" onclick="switchTab('pay')">+ Recevoir un paiement</button>
+          </div>
+        </div>
+
+        <h3>Dernières transactions</h3>
+        <div class="tx-list" id="txList">
+          <!-- Dynamique -->
+        </div>
+      </div>
+
+      <!-- Tab Link -->
+      <div class="tab-content" id="tab-link">
+        <h3>Votre lien de paiement personnel</h3>
+        <p style="color:var(--m)">Partagez ce lien à vos clients ou proches pour recevoir des paiements instantanés.</p>
+        
+        <div class="input-group">
+          <label>Lien personnel Hoto</label>
+          <div class="pay-link-box">
+            <input type="text" id="payLinkInput" readonly value="https://hoto.app/pay/@utilisateur">
+            <button class="btn sm" onclick="copyLink()">Copier</button>
+          </div>
+        </div>
+
+        <div style="text-align:center; margin-top:30px; padding:20px; background:var(--c); border-radius:16px;">
+          <small style="display:block; font-weight:700; margin-bottom:10px;">Scanner pour me payer</small>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hoto.app/pay/@utilisateur" alt="QR Code" style="border-radius:10px; border:2px solid var(--b);">
+        </div>
+      </div>
+
+      <!-- Tab Pay Simulation -->
+      <div class="tab-content" id="tab-pay">
+        <h3>Simuler un paiement entrant</h3>
+        <p style="color:var(--m)">Testez comment un client vous envoie de l'argent depuis n'importe où dans le monde.</p>
+
+        <form id="payForm" onsubmit="handlePay(event)">
+          <div class="input-group">
+            <label>Nom du payeur</label>
+            <input type="text" id="payClient" required value="Jean Dupont">
+          </div>
+          <div class="input-group">
+            <label>Montant</label>
+            <input type="number" id="payAmount" required value="5000">
+          </div>
+          <div class="input-group">
+            <label>Devise</label>
+            <select id="payCurrency">
+              <option value="XOF">Franc CFA (XOF)</option>
+              <option value="EUR">Euro (€)</option>
+              <option value="USD">Dollar US ($)</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Moyen de paiement</label>
+            <select id="payMethod">
+              <option value="Wave Mobile Money">Wave Mobile Money</option>
+              <option value="Orange Money">Orange Money</option>
+              <option value="MTN Mobile Money">MTN Mobile Money</option>
+              <option value="Carte Visa / Mastercard">Carte Visa / Mastercard</option>
+              <option value="Apple Pay">Apple Pay</option>
+            </select>
+          </div>
+          <button type="submit" class="btn" style="width:100%;">Valider le paiement test</button>
+        </form>
+      </div>
+
+      <!-- Tab Withdraw -->
+      <div class="tab-content" id="tab-withdraw">
+        <h3>Retirer vers votre Mobile Money</h3>
+        <p style="color:var(--m)">Transfert sécurisé avec votre code PIN personnel.</p>
+
+        <div id="withdrawStep1">
+          <div class="input-group">
+            <label>Numéro Mobile Money (Recepteur)</label>
+            <input type="tel" id="wPhone" placeholder="Ex: 0707070707" value="0707211737">
+          </div>
+          <div class="input-group">
+            <label>Opérateur</label>
+            <select id="wOp">
+              <option value="Wave">Wave</option>
+              <option value="Orange Money">Orange Money</option>
+              <option value="MTN Money">MTN Money</option>
+              <option value="Moov Money">Moov Money</option>
+            </select>
+          </div>
+          <div class="input-group">
+            <label>Montant à retirer (FCFA)</label>
+            <input type="number" id="wAmount" value="2000">
+          </div>
+          <button class="btn" style="width:100%" onclick="goToPin()">Continuer</button>
+        </div>
+
+        <div id="withdrawStep2" style="display:none; text-align:center;">
+          <p>Entrez votre code PIN à 4 chiffres (Code démo: <b>1234</b>)</p>
+          <div class="pin-dots">
+            <div class="pin-dot" id="dot0"></div>
+            <div class="pin-dot" id="dot1"></div>
+            <div class="pin-dot" id="dot2"></div>
+            <div class="pin-dot" id="dot3"></div>
+          </div>
+          <div class="pin-grid">
+            <button class="pin-btn" onclick="pressPin('1')">1</button>
+            <button class="pin-btn" onclick="pressPin('2')">2</button>
+            <button class="pin-btn" onclick="pressPin('3')">3</button>
+            <button class="pin-btn" onclick="pressPin('4')">4</button>
+            <button class="pin-btn" onclick="pressPin('5')">5</button>
+            <button class="pin-btn" onclick="pressPin('6')">6</button>
+            <button class="pin-btn" onclick="pressPin('7')">7</button>
+            <button class="pin-btn" onclick="pressPin('8')">8</button>
+            <button class="pin-btn" onclick="pressPin('9')">9</button>
+            <button class="pin-btn" onclick="clearPin()">C</button>
+            <button class="pin-btn" onclick="pressPin('0')">0</button>
+            <button class="pin-btn" onclick="submitWithdraw()">OK</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Tab Inbox -->
+      <div class="tab-content" id="tab-inbox">
+        <h3>Simulateur de Notifications Gmail</h3>
+        <p style="color:var(--m)">Chaque paiement déclenche un e-mail instantané dans votre boîte de réception.</p>
+        
+        <div class="tx-list" id="gmailList">
+          <!-- Dynamique -->
+        </div>
+      </div>
+
+    </div>
+  </div>
 </div>
-<div class="note">Gmail ne déplace pas l’argent : il sert à la connexion et aux notifications. Les paiements sont traités par Stripe et Flutterwave. Les moyens de paiement disponibles dépendent du pays du compte.</div></div></section>
-
-<section><div class="wrap"><h2>Sécurité</h2><ul>
-<li>Hoto ne voit jamais vos données de carte : elles sont saisies chez Stripe ou Flutterwave.</li>
-<li>Chaque paiement est vérifié auprès du fournisseur avant d’être crédité, et jamais crédité deux fois.</li>
-<li>Les retraits demandent votre code PIN. Après 3 erreurs, le compte est bloqué 15 minutes.</li>
-<li>Connexion par Google, session protégée, connexion en HTTPS.</li></ul></div></section>
-
-<footer><div class="wrap">Hoto · Boîte Gmail et paiements · <a data-app href="#">Ouvrir l’application</a></div></footer>
 
 <script>
-// Adresse de l'application une fois le backend en ligne (ex. https://hoto.onrender.com). Laisser vide tant qu'elle n'est pas en ligne.
-const APP_URL = '';
-document.querySelectorAll('[data-app]').forEach(a => {
-  if (APP_URL) a.href = APP_URL;
-  else { a.classList.add('off'); a.removeAttribute('href'); a.setAttribute('aria-disabled', 'true'); a.textContent = 'Ouverture prochainement'; }
-});
-if (!APP_URL) document.getElementById('status').hidden = false;
-</script></body></html>
+// État Global de l'Application
+let state = {
+  user: {
+    name: "Adama Coulibaly",
+    email: "adama.hoto@gmail.com",
+    balance: 15000,
+    pin: "1234",
+    attempts: 0
+  },
+  transactions: [
+    { id: "TX-9981", client: "Marie K.", amount: 5000, type: "in", method: "Wave", date: "Aujourd'hui 10:14" },
+    { id: "TX-9980", client: "Retrait Mobile Money", amount: 2000, type: "out", method: "Orange Money", date: "Hier 16:30" }
+  ],
+  currentPin: ""
+};
+
+// Fonctions d'Ouverture et Navigation
+function openApp(tab = 'dash') {
+  document.getElementById('appModal').classList.add('active');
+  updateUI();
+  switchTab(tab);
+}
+
+function closeApp() {
+  document.getElementById('appModal').classList.remove('active');
+}
+
+function switchTab(tabId) {
+  document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
+  document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
+  
+  // Highlight tab button
+  const index = ['dash', 'link', 'pay', 'withdraw', 'inbox'].indexOf(tabId);
+  if(index !== -1) {
+    document.querySelectorAll('.tab-btn')[index].classList.add('active');
+  }
+  
+  document.getElementById(`tab-${tabId}`).classList.add('active');
+}
+
+// Mise à jour de l'UI
+function updateUI() {
+  document.getElementById('userName').textContent = state.user.name;
+  document.getElementById('userEmail').textContent = state.user.email;
+  document.getElementById('userAvatar').textContent = state.user.name.charAt(0);
+  document.getElementById('userBalance').textContent = state.user.balance.toLocaleString() + " FCFA";
+
+  // Rendu Liste des Transactions
+  const txList = document.getElementById('txList');
+  txList.innerHTML = state.transactions.map(t => `
+    <div class="tx-item">
+      <div class="tx-info">
+        <b>${t.client}</b>
+        <small>${t.method} · ${t.date}</small>
+      </div>
+      <div class="tx-amount ${t.type}">
+        ${t.type === 'in' ? '+' : '-'}${t.amount.toLocaleString()} FCFA
+      </div>
+    </div>
+  `).join('');
+
+  // Rendu Notifications Gmail
+  const gmailList = document.getElementById('gmailList');
+  gmailList.innerHTML = state.transactions.filter(t => t.type === 'in').map(t => `
+    <div class="tx-item" style="background:#FBF3F2">
+      <div class="tx-info">
+        <b style="color:var(--r);">✉️ Paiement confirmé de ${t.client}</b>
+        <small>Reçu via Hoto (${t.method}) dans votre boîte ${state.user.email}</small>
+      </div>
+      <span class="badge success">+${t.amount} FCFA</span>
+    </div>
+  `).join('');
+}
+
+// Actions Lien
+function copyLink() {
+  const linkInput = document.getElementById('payLinkInput');
+  linkInput.select();
+  document.execCommand('copy');
+  alert("Lien de paiement copié !");
+}
+
+// Simulation Paiement
+function handlePay(e) {
+  e.preventDefault();
+  const client = document.getElementById('payClient').value;
+  const amount = parseInt(document.getElementById('payAmount').value);
+  const method = document.getElementById('payMethod').value;
+
+  state.user.balance += amount;
+  state.transactions.unshift({
+    id: "TX-" + Math.floor(1000 + Math.random() * 9000),
+    client: client,
+    amount: amount,
+    type: "in",
+    method: method,
+    date: "À l'instant"
+  });
+
+  updateUI();
+  alert(`Paiement de ${amount} FCFA reçu de ${client} ! Notification e-mail envoyée.`);
+  switchTab('dash');
+}
+
+// Retrait & Code PIN
+function goToPin() {
+  const amount = parseInt(document.getElementById('wAmount').value);
+  if(amount > state.user.balance) {
+    alert("Solde insuffisant !");
+    return;
+  }
+  document.getElementById('withdrawStep1').style.display = 'none';
+  document.getElementById('withdrawStep2').style.display = 'block';
+  state.currentPin = "";
+  updateDots();
+}
+
+function pressPin(num) {
+  if (state.currentPin.length < 4) {
+    state.currentPin += num;
+    updateDots();
+  }
+}
+
+function clearPin() {
+  state.currentPin = "";
+  updateDots();
+}
+
+function updateDots() {
+  for (let i = 0; i < 4; i++) {
+    const dot = document.getElementById(`dot${i}`);
+    if (i < state.currentPin.length) dot.classList.add('filled');
+    else dot.classList.remove('filled');
+  }
+}
+
+function submitWithdraw() {
+  if (state.currentPin === state.user.pin) {
+    const amount = parseInt(document.getElementById('wAmount').value);
+    const op = document.getElementById('wOp').value;
+
+    state.user.balance -= amount;
+    state.transactions.unshift({
+      id: "TX-" + Math.floor(1000 + Math.random() * 9000),
+      client: "Retrait Mobile Money",
+      amount: amount,
+      type: "out",
+      method: op,
+      date: "À l'instant"
+    });
+
+    alert("Retrait effectué avec succès !");
+    document.getElementById('withdrawStep2').style.display = 'none';
+    document.getElementById('withdrawStep1').style.display = 'block';
+    updateUI();
+    switchTab('dash');
+  } else {
+    state.user.attempts++;
+    alert(`Code PIN incorrect (${state.user.attempts}/3 essais). Code démo : 1234`);
+    clearPin();
+    if(state.user.attempts >= 3) {
+      alert("Compte temporairement bloqué par sécurité (15 min).");
+      closeApp();
+    }
+  }
+}
+</script>
+</body>
+</html>
