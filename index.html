@@ -3,219 +3,198 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>Hoto – Recevez de l’argent partout, dans votre boîte Gmail</title>
-<meta name="description" content="Hoto : un lien de paiement personnel, des paiements Mobile Money et carte du monde entier, et un e-mail dans votre Gmail à chaque paiement reçu.">
-<meta property="og:title" content="Hoto – Recevez de l’argent partout, dans votre boîte Gmail">
-<meta property="og:description" content="Lien de paiement personnel, Mobile Money et cartes, notification Gmail à chaque paiement.">
+<title>Hoto – Le portail officiel des paiements et des publications pour tous</title>
+<meta name="description" content="Hoto : lien de paiement personnel, Mobile Money, cartes du monde entier, notifications Gmail et espace de publication public officiel.">
+<meta property="og:title" content="Hoto – Le portail officiel des paiements et publications">
+<meta property="og:description" content="Lien de paiement personnel, Mobile Money, cartes et espace de publication officiel.">
 <meta property="og:type" content="website">
-<meta name="theme-color" content="#B3261E">
-<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%23B3261E'/%3E%3Cpath d='M20 14h7v14h10V14h7v36h-7V35H27v15h-7z' fill='white'/%3E%3C/svg%3E">
+<meta name="theme-color" content="#4b0082">
+<link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='14' fill='%234b0082'/%3E%3Cpath d='M20 14h7v14h10V14h7v36h-7V35H27v15h-7z' fill='white'/%3E%3C/svg%3E">
 
 <!-- SDK Supabase Officiel -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
 <style>
+/* Style CSS inspiré de l'identité Yahoo (Bleu corporate, épuré, pro) */
 :root {
-  --r: #B3261E;
-  --rd: #8F1D17;
-  --k: #C3B091;
-  --kd: #6B5F3A;
-  --c: #F4EFE2;
-  --t: #2B2620;
-  --m: #5A5243;
-  --b: #E6DCC3;
-  --rad: 16px;
-  --success: #2e7d32;
+  --y-blue: #6001d2;
+  --y-blue-dark: #4b0082;
+  --y-hover: #40008f;
+  --y-bg: #f8f9fa;
+  --y-border: #dcdfe4;
+  --y-text: #26282a;
+  --y-gray: #6c757d;
+  --y-light: #eef0f4;
+  --success: #12803b;
 }
 
 * { box-sizing: border-box; }
-html { scroll-behavior: smooth; scroll-padding-top: 76px; }
+html { scroll-behavior: smooth; scroll-padding-top: 80px; }
 body {
   margin: 0;
-  font-family: Inter, system-ui, -apple-system, "Segoe UI", Arial, sans-serif;
-  color: var(--t);
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  color: var(--y-text);
   background: #fff;
-  line-height: 1.6;
+  line-height: 1.5;
   -webkit-font-smoothing: antialiased;
 }
 
-:focus-visible { outline: 3px solid var(--kd); outline-offset: 3px; border-radius: 6px; }
-a { color: inherit; }
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 20px; }
-.skip { position: absolute; left: -999px; top: 8px; background: #fff; padding: 8px 14px; border-radius: 8px; z-index: 20; }
-.skip:focus { left: 8px; }
+:focus-visible { outline: 3px solid var(--y-blue); outline-offset: 2px; }
+a { color: inherit; text-decoration: none; }
+.wrap { max-width: 1200px; margin: 0 auto; padding: 0 16px; }
 
-/* En-tête */
-header { position: sticky; top: 0; z-index: 10; background: rgba(255, 255, 255, 0.96); backdrop-filter: blur(8px); border-bottom: 1px solid var(--b); }
-.bar { display: flex; align-items: center; gap: 20px; min-height: 68px; }
-.brand { display: flex; align-items: center; gap: 10px; text-decoration: none; font-weight: 800; font-size: 22px; color: var(--r); cursor: pointer; }
-.logo { width: 38px; height: 38px; border-radius: 11px; background: var(--r); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 21px; font-weight: 900; }
-nav { display: flex; gap: 6px; margin-left: auto; align-items: center; flex-wrap: wrap; }
-nav a { padding: 10px 14px; border-radius: 10px; text-decoration: none; font-weight: 600; font-size: 15px; color: var(--m); }
-nav a:hover { background: var(--c); color: var(--t); }
-nav a.btn { color: #fff; margin-left: 6px; }
-nav a.btn:hover { background: var(--rd); color: #fff; }
+/* En-tête type Yahoo */
+header { position: sticky; top: 0; z-index: 50; background: #fff; border-bottom: 1px solid var(--y-border); box-shadow: 0 2px 4px rgba(0,0,0,0.04); }
+.bar { display: flex; align-items: center; justify-content: space-between; min-height: 70px; gap: 15px; }
+.brand { display: flex; align-items: center; gap: 8px; font-weight: 900; font-size: 26px; color: var(--y-blue); letter-spacing: -0.5px; cursor: pointer; }
+.logo { width: 40px; height: 40px; border-radius: 8px; background: var(--y-blue); color: #fff; display: flex; align-items: center; justify-content: center; font-size: 22px; font-weight: 900; }
+
+nav { display: flex; gap: 4px; align-items: center; flex-wrap: wrap; }
+nav a { padding: 8px 12px; border-radius: 4px; font-weight: 600; font-size: 14px; color: var(--y-text); }
+nav a:hover { background: var(--y-light); color: var(--y-blue); }
+nav a.btn-nav { background: var(--y-blue); color: #fff; border-radius: 20px; padding: 8px 18px; }
+nav a.btn-nav:hover { background: var(--y-hover); }
 
 .btn {
-  min-height: 48px;
-  padding: 0 24px;
-  border-radius: 12px;
-  background: var(--r);
+  min-height: 44px;
+  padding: 0 22px;
+  border-radius: 22px;
+  background: var(--y-blue);
   color: #fff;
   font-weight: 700;
   text-decoration: none;
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  border: 2px solid var(--r);
-  transition: all .15s ease;
+  border: none;
+  transition: background .15s ease;
   cursor: pointer;
   font-size: 15px;
 }
-.btn:hover { background: var(--rd); border-color: var(--rd); }
-.btn.o { background: #fff; color: var(--r); }
-.btn.o:hover { background: var(--c); }
-.btn.off { background: var(--kd); border-color: var(--kd); pointer-events: none; }
-.btn.sm { min-height: 38px; padding: 0 14px; font-size: 13px; border-radius: 8px; }
+.btn:hover { background: var(--y-hover); }
+.btn.o { background: #fff; color: var(--y-blue); border: 2px solid var(--y-blue); }
+.btn.o:hover { background: var(--y-light); }
+.btn.sm { min-height: 34px; padding: 0 12px; font-size: 13px; border-radius: 17px; }
 
-/* Hero */
-.hero { background: linear-gradient(180deg, var(--c), #fff); padding: 64px 0 72px; }
-.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 40px; align-items: center; }
-.tag { display: inline-block; background: var(--b); color: var(--kd); font-weight: 700; font-size: 13px; letter-spacing: .04em; text-transform: uppercase; padding: 6px 12px; border-radius: 20px; margin-bottom: 16px; }
-h1 { margin: 0 0 18px; font-size: clamp(32px, 5.2vw, 54px); line-height: 1.08; letter-spacing: -.02em; }
-h1 span { color: var(--r); }
-.lead { font-size: 19px; color: var(--m); margin: 0 0 28px; max-width: 560px; }
-.cta { display: flex; gap: 12px; flex-wrap: wrap; }
-.chips { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 28px; }
-.chips span { background: #fff; border: 1px solid var(--b); border-radius: 20px; padding: 6px 14px; font-size: 14px; font-weight: 600; color: var(--m); }
+/* Hero Section */
+.hero { background: var(--y-light); padding: 50px 0 60px; border-bottom: 1px solid var(--y-border); }
+.hero .wrap { display: grid; grid-template-columns: 1.1fr .9fr; gap: 30px; align-items: center; }
+.tag { display: inline-block; background: #e0d4fc; color: var(--y-blue-dark); font-weight: 700; font-size: 12px; text-transform: uppercase; padding: 5px 10px; border-radius: 12px; margin-bottom: 14px; }
+h1 { margin: 0 0 15px; font-size: clamp(28px, 4.5vw, 48px); line-height: 1.15; font-weight: 800; }
+h1 span { color: var(--y-blue); }
+.lead { font-size: 17px; color: var(--y-gray); margin: 0 0 24px; max-width: 520px; }
+.cta { display: flex; gap: 10px; flex-wrap: wrap; }
+.chips { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 24px; }
+.chips span { background: #fff; border: 1px solid var(--y-border); border-radius: 16px; padding: 4px 12px; font-size: 13px; font-weight: 600; color: var(--y-gray); }
 
 /* Téléphone Démo */
-.phone { width: 290px; margin: 0 auto; background: var(--t); border-radius: 38px; padding: 12px; box-shadow: 0 24px 60px rgba(43,38,32,.25); }
-.screen { background: #fff; border-radius: 28px; overflow: hidden; min-height: 480px; display: flex; flex-direction: column; }
-.screen .top { background: var(--r); color: #fff; padding: 20px 18px 14px; display: flex; align-items: center; gap: 10px; font-weight: 800; }
-.screen .top i { width: 26px; height: 26px; border-radius: 8px; background: #fff; color: var(--r); font-style: normal; display: flex; align-items: center; justify-content: center; font-size: 15px; font-weight: 900; }
-.mail { padding: 14px 16px; border-bottom: 1px solid var(--c); display: flex; gap: 12px; align-items: center; }
-.mail .a { width: 38px; height: 38px; border-radius: 50%; background: var(--k); flex: none; display: flex; align-items: center; justify-content: center; font-weight: 800; }
-.mail b { display: block; font-size: 14px; }
-.mail small { display: block; color: var(--m); font-size: 12px; }
-.bar2 { height: 9px; border-radius: 5px; background: var(--b); margin-top: 7px; }
-.mail.n { background: #FBF3F2; }
-.mail.n .a { background: var(--r); color: #fff; }
-.sw { margin: 16px; display: flex; flex-direction: column; gap: 10px; }
-.sw div { height: 44px; border-radius: 12px; background: var(--c); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 14px; color: var(--m); cursor: pointer; }
-.sw div.r { background: var(--r); color: #fff; }
+.phone { width: 280px; margin: 0 auto; background: #26282a; border-radius: 36px; padding: 10px; box-shadow: 0 20px 40px rgba(0,0,0,0.15); }
+.screen { background: #fff; border-radius: 26px; overflow: hidden; min-height: 450px; display: flex; flex-direction: column; }
+.screen .top { background: var(--y-blue); color: #fff; padding: 18px 16px 12px; display: flex; align-items: center; gap: 8px; font-weight: 800; }
+.screen .top i { width: 24px; height: 24px; border-radius: 6px; background: #fff; color: var(--y-blue); font-style: normal; display: flex; align-items: center; justify-content: center; font-size: 14px; font-weight: 900; }
+.mail { padding: 12px 14px; border-bottom: 1px solid var(--y-light); display: flex; gap: 10px; align-items: center; }
+.mail .a { width: 34px; height: 34px; border-radius: 50%; background: #e2e8f0; flex: none; display: flex; align-items: center; justify-content: center; font-weight: 800; font-size: 14px; }
+.mail b { display: block; font-size: 13px; }
+.mail small { display: block; color: var(--y-gray); font-size: 11px; }
+.bar2 { height: 7px; border-radius: 4px; background: var(--y-border); margin-top: 6px; }
+.mail.n { background: #f3ebff; }
+.mail.n .a { background: var(--y-blue); color: #fff; }
+.sw { margin: 14px; display: flex; flex-direction: column; gap: 8px; }
+.sw div { height: 40px; border-radius: 10px; background: var(--y-light); display: flex; align-items: center; justify-content: center; font-weight: 700; font-size: 13px; color: var(--y-gray); cursor: pointer; }
+.sw div.r { background: var(--y-blue); color: #fff; }
 
-/* Sections */
-section { padding: 72px 0; }
-.alt { background: var(--c); }
-.head { max-width: 640px; margin: 0 0 36px; }
-.head h2 { margin: 0 0 10px; font-size: clamp(26px, 4vw, 36px); line-height: 1.15; letter-spacing: -.01em; }
-.head p { margin: 0; color: var(--m); font-size: 17px; }
-.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 20px; }
-.card { background: #fff; border: 2px solid var(--b); border-radius: var(--rad); padding: 26px; }
-.alt .card { border-color: var(--k); }
-.card h3 { margin: 0 0 8px; font-size: 19px; }
-.card p { margin: 0; color: var(--m); }
-.n { width: 40px; height: 40px; border-radius: 50%; background: var(--r); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
-.ic { width: 44px; height: 44px; border-radius: 12px; background: var(--c); color: var(--r); display: flex; align-items: center; justify-content: center; margin-bottom: 14px; }
-.ic svg { width: 24px; height: 24px; }
-.conts { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 16px; }
-.cont { background: #fff; border-radius: var(--rad); padding: 20px; border-top: 5px solid var(--r); }
-.cont:nth-child(even) { border-top-color: var(--kd); }
-.cont h3 { margin: 0 0 6px; font-size: 17px; }
-.cont p { margin: 0; font-size: 14px; color: var(--m); }
-.note { background: var(--b); border-radius: 12px; padding: 16px 20px; margin-top: 24px; color: var(--t); font-size: 14px; }
-.sec { display: grid; grid-template-columns: repeat(auto-fit, minmax(300px, 1fr)); gap: 14px 28px; list-style: none; padding: 0; margin: 0; }
-.sec li { display: flex; gap: 12px; align-items: flex-start; color: var(--m); }
-.sec svg { flex: none; width: 24px; height: 24px; color: var(--r); margin-top: 2px; }
+/* Sections Générales */
+section { padding: 60px 0; }
+.alt { background: var(--y-bg); }
+.head { max-width: 600px; margin: 0 0 30px; }
+.head h2 { margin: 0 0 8px; font-size: clamp(24px, 3.5vw, 32px); font-weight: 800; }
+.head p { margin: 0; color: var(--y-gray); font-size: 16px; }
+.grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(250px, 1fr)); gap: 18px; }
+.card { background: #fff; border: 1px solid var(--y-border); border-radius: 12px; padding: 24px; box-shadow: 0 2px 6px rgba(0,0,0,0.02); }
+.card h3 { margin: 0 0 8px; font-size: 18px; font-weight: 700; }
+.card p { margin: 0; color: var(--y-gray); font-size: 14px; }
+.n { width: 36px; height: 36px; border-radius: 50%; background: var(--y-blue); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; margin-bottom: 12px; font-size: 15px; }
 
-details { background: #fff; border: 2px solid var(--b); border-radius: 12px; margin-bottom: 12px; }
-summary { cursor: pointer; padding: 18px 22px; font-weight: 700; list-style: none; display: flex; justify-content: space-between; gap: 12px; }
-summary::after { content: "+"; color: var(--r); font-size: 22px; line-height: 1; }
-details[open] summary::after { content: "−"; }
-details p { margin: 0; padding: 0 22px 20px; color: var(--m); }
-
-.band { background: var(--r); color: #fff; text-align: center; padding: 64px 0; }
-.band h2 { margin: 0 0 12px; font-size: clamp(26px, 4vw, 36px); }
-.band p { margin: 0 0 24px; opacity: .95; }
-.band .btn { background: #fff; color: var(--r); border-color: #fff; }
-
-footer { background: var(--t); color: #E8E2D2; padding: 36px 0; font-size: 14px; }
-footer .wrap { display: flex; gap: 16px; justify-content: space-between; flex-wrap: wrap; }
-footer a { color: var(--k); text-decoration: none; }
+/* Footer */
+footer { background: #26282a; color: #a0a4a8; padding: 30px 0; font-size: 13px; border-top: 1px solid #3e4144; }
+footer .wrap { display: flex; gap: 15px; justify-content: space-between; flex-wrap: wrap; align-items: center; }
+footer a { color: #fff; text-decoration: underline; }
 
 /* Modal & Application Interface */
 .modal-overlay {
   position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-  background: rgba(43, 38, 32, 0.7);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.6);
+  backdrop-filter: blur(4px);
   z-index: 100;
   display: flex; align-items: center; justify-content: center;
-  padding: 20px;
-  opacity: 0; pointer-events: none; transition: opacity .25s ease;
+  padding: 16px;
+  opacity: 0; pointer-events: none; transition: opacity .2s ease;
 }
 .modal-overlay.active { opacity: 1; pointer-events: auto; }
 
 .app-box {
-  background: #fff; border-radius: 24px; max-width: 900px; width: 100%;
-  max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 50px rgba(0,0,0,0.3);
+  background: #fff; border-radius: 20px; max-width: 900px; width: 100%;
+  max-height: 90vh; overflow-y: auto; box-shadow: 0 20px 40px rgba(0,0,0,0.2);
   display: flex; flex-direction: column; position: relative;
 }
 .app-header {
-  background: var(--c); padding: 16px 24px; border-bottom: 1px solid var(--b);
+  background: var(--y-light); padding: 16px 20px; border-bottom: 1px solid var(--y-border);
   display: flex; align-items: center; justify-content: space-between; position: sticky; top: 0; z-index: 5;
 }
-.app-user-info { display: flex; align-items: center; gap: 12px; }
-.app-avatar { width: 40px; height: 40px; border-radius: 50%; background: var(--r); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 16px; }
-.close-app { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--m); font-weight: 700; }
+.app-user-info { display: flex; align-items: center; gap: 10px; }
+.app-avatar { width: 38px; height: 38px; border-radius: 50%; background: var(--y-blue); color: #fff; font-weight: 800; display: flex; align-items: center; justify-content: center; font-size: 15px; }
+.close-app { background: none; border: none; font-size: 24px; cursor: pointer; color: var(--y-gray); font-weight: 700; }
 
-.app-body { padding: 24px; }
-.tab-nav { display: flex; gap: 8px; border-bottom: 2px solid var(--c); margin-bottom: 24px; overflow-x: auto; }
-.tab-btn { padding: 10px 18px; border: none; background: none; font-weight: 700; color: var(--m); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; }
-.tab-btn.active { color: var(--r); border-bottom-color: var(--r); }
+.app-body { padding: 20px; }
+.tab-nav { display: flex; gap: 6px; border-bottom: 2px solid var(--y-border); margin-bottom: 20px; overflow-x: auto; }
+.tab-btn { padding: 10px 14px; border: none; background: none; font-weight: 700; color: var(--y-gray); cursor: pointer; border-bottom: 3px solid transparent; margin-bottom: -2px; font-size: 14px; white-space: nowrap; }
+.tab-btn.active { color: var(--y-blue); border-bottom-color: var(--y-blue); }
 
 .tab-content { display: none; }
 .tab-content.active { display: block; }
 
-/* Dashboard Cards */
-.dash-card { background: var(--c); border-radius: 16px; padding: 20px; margin-bottom: 20px; border: 1px solid var(--b); }
-.balance-num { font-size: 36px; font-weight: 900; color: var(--r); margin: 10px 0; }
+.dash-card { background: var(--y-light); border-radius: 12px; padding: 18px; margin-bottom: 18px; border: 1px solid var(--y-border); }
+.balance-num { font-size: 32px; font-weight: 900; color: var(--y-blue); margin: 8px 0; }
 
-.input-group { margin-bottom: 16px; }
-.input-group label { display: block; font-weight: 700; margin-bottom: 6px; font-size: 14px; }
-.input-group input, .input-group select {
-  width: 100%; padding: 12px 16px; border-radius: 10px; border: 2px solid var(--b);
-  font-family: inherit; font-size: 15px; outline: none;
+.input-group { margin-bottom: 14px; }
+.input-group label { display: block; font-weight: 700; margin-bottom: 5px; font-size: 13px; }
+.input-group input, .input-group select, .input-group textarea {
+  width: 100%; padding: 10px 14px; border-radius: 8px; border: 1px solid var(--y-border);
+  font-family: inherit; font-size: 14px; outline: none; background: #fff;
 }
-.input-group input:focus, .input-group select:focus { border-color: var(--r); }
+.input-group input:focus, .input-group select:focus, .input-group textarea:focus { border-color: var(--y-blue); box-shadow: 0 0 0 2px rgba(96,1,210,0.15); }
 
 .pay-link-box { display: flex; gap: 8px; }
-.pay-link-box input { flex: 1; background: #fff; font-weight: 600; color: var(--kd); }
+.pay-link-box input { flex: 1; background: #fff; font-weight: 600; color: var(--y-blue-dark); }
 
 .tx-list { display: flex; flex-direction: column; gap: 10px; }
-.tx-item { background: #fff; padding: 14px 18px; border-radius: 12px; border: 1px solid var(--b); display: flex; align-items: center; justify-content: space-between; }
-.tx-info b { display: block; font-size: 15px; }
-.tx-info small { color: var(--m); font-size: 12px; }
-.tx-amount { font-weight: 800; font-size: 16px; }
+.tx-item { background: #fff; padding: 14px 16px; border-radius: 10px; border: 1px solid var(--y-border); display: flex; align-items: center; justify-content: space-between; }
+.tx-info b { display: block; font-size: 14px; }
+.tx-info small { color: var(--y-gray); font-size: 11px; }
+.tx-amount { font-weight: 800; font-size: 15px; }
 .tx-amount.in { color: var(--success); }
-.tx-amount.out { color: var(--r); }
+.tx-amount.out { color: var(--y-blue); }
 
-.badge { display: inline-block; padding: 4px 10px; border-radius: 12px; font-size: 12px; font-weight: 700; text-transform: uppercase; }
-.badge.success { background: #e8f5e9; color: var(--success); }
+.badge { display: inline-block; padding: 3px 8px; border-radius: 10px; font-size: 11px; font-weight: 700; text-transform: uppercase; }
+.badge.success { background: #e6f4ea; color: var(--success); }
+
+/* Elements Médias Espace Public */
+.pub-img { width: 100%; max-height: 250px; object-fit: cover; border-radius: 8px; margin-top: 8px; border: 1px solid var(--y-border); }
+.pub-link { color: var(--y-blue); font-weight: 700; text-decoration: underline; word-break: break-all; font-size: 13px; margin-top: 4px; display: inline-block; }
 
 /* Keypad PIN */
-.pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; max-width: 240px; margin: 20px auto; }
-.pin-btn { height: 50px; border-radius: 12px; border: 2px solid var(--b); background: #fff; font-size: 20px; font-weight: 800; cursor: pointer; }
-.pin-btn:hover { background: var(--c); }
-.pin-dots { display: flex; justify-content: center; gap: 12px; margin: 15px 0; }
-.pin-dot { width: 14px; height: 14px; border-radius: 50%; border: 2px solid var(--r); }
-.pin-dot.filled { background: var(--r); }
+.pin-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 8px; max-width: 220px; margin: 15px auto; }
+.pin-btn { height: 46px; border-radius: 10px; border: 1px solid var(--y-border); background: #fff; font-size: 18px; font-weight: 800; cursor: pointer; }
+.pin-btn:hover { background: var(--y-light); }
+.pin-dots { display: flex; justify-content: center; gap: 10px; margin: 12px 0; }
+.pin-dot { width: 12px; height: 12px; border-radius: 50%; border: 2px solid var(--y-blue); }
+.pin-dot.filled { background: var(--y-blue); }
 
 @media(max-width:860px){
   .hero .wrap { grid-template-columns: 1fr; }
-  .hero { padding: 40px 0 56px; }
-  nav a:not(.btn) { display: none; }
-  section { padding: 52px 0; }
+  .hero { padding: 40px 0; }
+  nav a:not(.btn-nav) { display: none; }
+  section { padding: 40px 0; }
 }
 </style>
 </head>
@@ -230,11 +209,10 @@ footer a { color: var(--k); text-decoration: none; }
     </a>
     <nav aria-label="Navigation principale">
       <a href="#fonctionnement">Fonctionnement</a>
-      <a href="#fonctions">Fonctions</a>
+      <a href="#fonctions">Services</a>
       <a href="#monde">Devises</a>
       <a href="#securite">Sécurité</a>
-      <a href="#faq">FAQ</a>
-      <a class="btn" onclick="openApp()">Ouvrir Hoto</a>
+      <a class="btn-nav" onclick="openApp()">Ouvrir l'App</a>
     </nav>
   </div>
 </header>
@@ -243,49 +221,40 @@ footer a { color: var(--k); text-decoration: none; }
   <div class="hero">
     <div class="wrap">
       <div>
-        <span class="tag">Gmail · Mobile Money · Cartes</span>
-        <h1>Recevez de l’argent partout, <span>dans votre boîte Gmail</span>.</h1>
-        <p class="lead">Connectez-vous avec Gmail, partagez votre lien de paiement et soyez payé par Mobile Money ou par carte, depuis l’Afrique, les Amériques, l’Europe, l’Asie et l’Océanie.</p>
+        <span class="tag">Portail Officiel · Tous Publics</span>
+        <h1>Recevez de l’argent partout, <span>publiez et partagez</span>.</h1>
+        <p class="lead">Le portail officiel unifié : gérez vos paiements Mobile Money et cartes, et publiez vos contenus, images et liens officiels pour tout le monde en un seul clic.</p>
         <div class="cta">
-          <button class="btn" onclick="openApp()">Ouvrir Hoto</button>
-          <a class="btn o" href="#fonctionnement">Comment ça marche</a>
+          <button class="btn" onclick="openApp()">Ouvrir l'application</button>
+          <button class="btn o" onclick="openApp('public')">Espace Publication Publique</button>
         </div>
         <div class="chips">
-          <span>Compte en 1 clic</span>
-          <span>Photo de profil Google</span>
-          <span>Retrait avec code PIN</span>
+          <span>Connexion sécurisée Google</span>
+          <span>Espace Public (Images & Liens)</span>
+          <span>Retrait PIN Mobile Money</span>
         </div>
       </div>
       <div class="phone" aria-hidden="true">
         <div class="screen">
-          <div class="top"><i>H</i>Hoto</div>
+          <div class="top"><i>H</i>Hoto Officiel</div>
           <div class="mail n">
             <div class="a">$</div>
             <div>
-              <b>Hoto : paiement reçu</b>
-              <small>Dans votre boîte Gmail</small>
+              <b>Hoto : Paiement reçu</b>
+              <small>Notifié dans votre boîte Gmail</small>
+              <div class="bar2" style="width:130px"></div>
+            </div>
+          </div>
+          <div class="mail">
+            <div class="a">P</div>
+            <div>
+              <b>Nouvelle publication avec image</b>
               <div class="bar2" style="width:140px"></div>
             </div>
           </div>
-          <div class="mail">
-            <div class="a">M</div>
-            <div>
-              <b>Paiement Mobile Money</b>
-              <div class="bar2" style="width:150px"></div>
-              <div class="bar2" style="width:100px"></div>
-            </div>
-          </div>
-          <div class="mail">
-            <div class="a">C</div>
-            <div>
-              <b>Paiement par carte</b>
-              <div class="bar2" style="width:130px"></div>
-              <div class="bar2" style="width:90px"></div>
-            </div>
-          </div>
           <div class="sw">
-            <div class="r" onclick="openApp('withdraw')">Retirer vers Mobile Money</div>
-            <div onclick="openApp('link')">Copier mon lien de paiement</div>
+            <div class="r" onclick="openApp('public')">📢 Publier une image ou un lien</div>
+            <div onclick="openApp('link')">💖 Copier mon lien de paiement</div>
           </div>
         </div>
       </div>
@@ -296,23 +265,23 @@ footer a { color: var(--k); text-decoration: none; }
     <div class="wrap">
       <div class="head">
         <h2>Comment ça marche</h2>
-        <p>Trois étapes, sans formulaire interminable.</p>
+        <p>Simple, rapide et accessible à tous les publics.</p>
       </div>
       <div class="grid">
         <div class="card">
           <div class="n">1</div>
-          <h3>Connectez-vous avec Gmail</h3>
-          <p>Un compte en 1 clic avec votre compte Google. Votre nom et votre photo de profil sont repris automatiquement.</p>
+          <h3>Connexion en 1 clic</h3>
+          <p>Connectez-vous instantanément avec votre profil Google et activez votre espace officiel.</p>
         </div>
         <div class="card">
           <div class="n">2</div>
-          <h3>Partagez votre lien</h3>
-          <p>Vous recevez un lien de paiement personnel. La personne qui vous paie choisit sa devise et son moyen de paiement.</p>
+          <h3>Paiements & Liens</h3>
+          <p>Partagez votre lien de paiement personnel avec un cœur 💖 ou recevez des fonds via Mobile Money et cartes[cite: 1].</p>
         </div>
         <div class="card">
           <div class="n">3</div>
-          <h3>Recevez et retirez</h3>
-          <p>Chaque paiement confirmé arrive par e-mail dans votre Gmail. Vous retirez vers votre Mobile Money avec votre code PIN.</p>
+          <h3>Publications Officielles</h3>
+          <p>Publiez et partagez vos actualités, annonces, images ou liens sur l'espace public pour que tout le monde les voie.</p>
         </div>
       </div>
     </div>
@@ -321,51 +290,21 @@ footer a { color: var(--k); text-decoration: none; }
   <section id="fonctions" class="alt">
     <div class="wrap">
       <div class="head">
-        <h2>Tout ce qu’il faut pour être payé</h2>
-        <p>Un outil simple, pensé pour les indépendants, les boutiques et les familles.</p>
+        <h2>Services intégrés</h2>
+        <p>Tout ce dont vous avez besoin pour vos transactions et vos partages.</p>
       </div>
       <div class="grid">
         <div class="card">
-          <div class="ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="8" r="4"/><path d="M4 21c1-4 4-6 8-6s7 2 8 6"/></svg>
-          </div>
-          <h3>Compte en 1 clic</h3>
-          <p>Connexion avec Google, adresse et lien de paiement créés automatiquement.</p>
+          <h3>💳 Liens de Paiement</h3>
+          <p>Encaissez par Mobile Money (Wave, Orange, MTN, Moov) et cartes internationales.</p>
         </div>
         <div class="card">
-          <div class="ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M10 14a4 4 0 0 0 6 0l3-3a4 4 0 0 0-6-6l-1 1"/><path d="M14 10a4 4 0 0 0-6 0l-3 3a4 4 0 0 0 6 6l1-1"/></svg>
-          </div>
-          <h3>Lien de paiement personnel</h3>
-          <p>Un seul lien à envoyer par message, réseau social ou e-mail.</p>
+          <h3>📢 Espace Public Média</h3>
+          <p>Une page dédiée où tous les utilisateurs peuvent publier des annonces avec images et liens web.</p>
         </div>
         <div class="card">
-          <div class="ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>
-          </div>
-          <h3>Notification Gmail</h3>
-          <p>Un e-mail « paiement reçu » dans votre boîte à chaque paiement confirmé.</p>
-        </div>
-        <div class="card">
-          <div class="ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2" width="10" height="20" rx="2"/><path d="M11 18h2"/></svg>
-          </div>
-          <h3>Mobile Money et cartes</h3>
-          <p>Mobile Money et carte en Afrique ; carte, Apple Pay et Google Pay ailleurs.</p>
-        </div>
-        <div class="card">
-          <div class="ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3c3 3 3 15 0 18M12 3c-3 3-3 15 0 18"/></svg>
-          </div>
-          <h3>Plusieurs devises</h3>
-          <p>Vous recevez dans la devise de votre client : franc CFA, euro, dollar, livre, yen et bien d’autres.</p>
-        </div>
-        <div class="card">
-          <div class="ic">
-            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="11" width="14" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>
-          </div>
-          <h3>Retrait protégé par PIN</h3>
-          <p>Chaque retrait demande votre code PIN, avec blocage après trois erreurs.</p>
+          <h3>✉️ Notifications Gmail</h3>
+          <p>Recevez un récapitulatif e-mail instantané dans votre boîte pour chaque opération validée.</p>
         </div>
       </div>
     </div>
@@ -374,33 +313,18 @@ footer a { color: var(--k); text-decoration: none; }
   <section id="monde">
     <div class="wrap">
       <div class="head">
-        <h2>Payé depuis tous les continents</h2>
-        <p>Deux partenaires de paiement reconnus se partagent le monde.</p>
+        <h2>Couverture Internationale</h2>
+        <p>Compatible avec les principaux réseaux de paiement en Afrique, Europe et Amériques.</p>
       </div>
-      <div class="conts">
-        <div class="cont">
+      <div class="grid">
+        <div class="card">
           <h3>Afrique</h3>
-          <p>Mobile Money et carte, via Flutterwave. Franc CFA (XOF, XAF), cedi, shilling, naira, franc rwandais, rand, kwacha.</p>
+          <p>Mobile Money & Cartes via Flutterwave (XOF, XAF, GHS, NGN, etc.).</p>
         </div>
-        <div class="cont">
-          <h3>Amériques</h3>
-          <p>Carte, Apple Pay et Google Pay, via Stripe. Dollar américain et canadien, real, peso mexicain.</p>
+        <div class="card">
+          <h3>International</h3>
+          <p>Cartes, Apple Pay et Google Pay via Stripe (EUR, USD, GBP, etc.).</p>
         </div>
-        <div class="cont">
-          <h3>Europe</h3>
-          <p>Carte, Apple Pay et Google Pay, via Stripe. Euro, livre, franc suisse, couronnes suédoise, norvégienne et danoise.</p>
-        </div>
-        <div class="cont">
-          <h3>Asie</h3>
-          <p>Carte, via Stripe. Yen, roupie, dollar de Singapour et de Hong Kong, dirham.</p>
-        </div>
-        <div class="cont">
-          <h3>Océanie</h3>
-          <p>Carte, via Stripe. Dollar australien et néo-zélandais.</p>
-        </div>
-      </div>
-      <div class="note">
-        Gmail ne déplace pas l’argent : il sert à la connexion et aux notifications. Les paiements sont traités par Stripe et Flutterwave, et les moyens disponibles dépendent du pays du compte.
       </div>
     </div>
   </section>
@@ -408,73 +332,27 @@ footer a { color: var(--k); text-decoration: none; }
   <section id="securite" class="alt">
     <div class="wrap">
       <div class="head">
-        <h2>La sécurité avant tout</h2>
-        <p>Des règles strictes pour protéger chaque paiement.</p>
+        <h2>Sécurité & Fiabilité</h2>
+        <p>Protection maximale des données et des retraits par code PIN.</p>
       </div>
-      <ul class="sec">
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-          Hoto ne voit jamais vos données de carte : elles sont saisies chez Stripe ou Flutterwave.
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-          Chaque paiement est vérifié auprès du fournisseur avant d’être crédité, et jamais crédité deux fois.
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-          Les retraits demandent votre code PIN. Après 3 erreurs, le compte est bloqué 15 minutes.
-        </li>
-        <li>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 3l8 3v6c0 5-3.5 8-8 9-4.5-1-8-4-8-9V6z"/><path d="M9 12l2 2 4-4"/></svg>
-          Connexion par Google, session protégée et connexion en HTTPS.
-        </li>
-      </ul>
-    </div>
-  </section>
-
-  <section id="faq">
-    <div class="wrap">
-      <div class="head">
-        <h2>Questions fréquentes</h2>
-      </div>
-      <div style="max-width:760px">
-        <details>
-          <summary>Gmail envoie-t-il l’argent ?</summary>
-          <p>Non. Gmail sert à vous connecter et à vous notifier. L’argent passe par Stripe et Flutterwave, des services de paiement spécialisés.</p>
-        </details>
-        <details>
-          <summary>Quels sont les frais ?</summary>
-          <p>Hoto prélève des frais de service (1 % par défaut) sur les paiements reçus et les retraits, en plus des frais propres à Stripe et Flutterwave.</p>
-        </details>
-        <details>
-          <summary>Mon pays est-il pris en charge ?</summary>
-          <p>Cela dépend des devises et des moyens de paiement disponibles chez Stripe et Flutterwave pour votre pays. La liste des devises est indiquée plus haut.</p>
-        </details>
-        <details>
-          <summary>Comment retirer mon argent ?</summary>
-          <p>Depuis l’onglet « Retirer », vers un compte Mobile Money, après saisie de votre code PIN.</p>
-        </details>
-        <details>
-          <summary>Puis-je installer Hoto sur mon téléphone ?</summary>
-          <p>Oui. Ouvrez l’application dans votre navigateur et choisissez « Ajouter à l’écran d’accueil ».</p>
-        </details>
+      <div class="grid">
+        <div class="card">
+          <h3>🔒 Retraits protégés par PIN</h3>
+          <p>Chaque transfert vers votre Mobile Money nécessite votre code PIN personnel à 4 chiffres.</p>
+        </div>
+        <div class="card">
+          <h3>🛡️ Chiffrement Officiel</h3>
+          <p>Connexions sécurisées en HTTPS et synchronisation temps réel avec Supabase.</p>
+        </div>
       </div>
     </div>
   </section>
-
-  <div class="band">
-    <div class="wrap">
-      <h2>Commencez à recevoir de l’argent</h2>
-      <p>Un compte en 1 clic avec Gmail.</p>
-      <button class="btn" onclick="openApp()">Ouvrir Hoto</button>
-    </div>
-  </div>
 </main>
 
 <footer>
   <div class="wrap">
-    <div><b>Hoto</b> · Boîte Gmail et paiements</div>
-    <div>Rouge, blanc et kaki · <a onclick="openApp()">Ouvrir l’application</a></div>
+    <div><b>Hoto Officiel</b> · Tous droits réservés</div>
+    <div>Interface Yahoo Style · <a onclick="openApp()">Ouvrir l’application</a></div>
   </div>
 </footer>
 
@@ -486,7 +364,7 @@ footer a { color: var(--k); text-decoration: none; }
         <div class="app-avatar" id="userAvatar">A</div>
         <div>
           <b id="userName">Adama Coulibaly</b>
-          <small style="display:block; color:var(--m);" id="userEmail">adama.hoto@gmail.com</small>
+          <small style="display:block; color:var(--y-gray);" id="userEmail">adama.hoto@gmail.com</small>
         </div>
       </div>
       <button class="close-app" onclick="closeApp()">&times;</button>
@@ -495,8 +373,9 @@ footer a { color: var(--k); text-decoration: none; }
     <div class="app-body">
       <div class="tab-nav">
         <button class="tab-btn active" onclick="switchTab('dash')">Tableau de bord</button>
-        <button class="tab-btn" onclick="switchTab('link')">Mon Lien</button>
-        <button class="tab-btn" onclick="switchTab('pay')">Simuler un Paiement</button>
+        <button class="tab-btn" onclick="switchTab('public')">📢 Espace Public</button>
+        <button class="tab-btn" onclick="switchTab('link')">💖 Mon Lien</button>
+        <button class="tab-btn" onclick="switchTab('pay')">Simuler Paiement</button>
         <button class="tab-btn" onclick="switchTab('withdraw')">Retirer</button>
         <button class="tab-btn" onclick="switchTab('inbox')">Gmail Notifications</button>
       </div>
@@ -504,24 +383,62 @@ footer a { color: var(--k); text-decoration: none; }
       <!-- Tab Dashboard -->
       <div class="tab-content active" id="tab-dash">
         <div class="dash-card">
-          <small style="font-weight:700; text-transform:uppercase; color:var(--m);">Solde disponible</small>
+          <small style="font-weight:700; text-transform:uppercase; color:var(--y-gray);">Solde disponible</small>
           <div class="balance-num" id="userBalance">15 000 FCFA</div>
-          <div style="display:flex; gap:10px;">
+          <div style="display:flex; gap:8px; flex-wrap:wrap;">
             <button class="btn sm" onclick="switchTab('withdraw')">Retirer des fonds</button>
-            <button class="btn sm o" onclick="switchTab('pay')">+ Recevoir un paiement</button>
+            <button class="btn sm o" onclick="switchTab('public')">Publier sur l'Espace Public</button>
           </div>
         </div>
 
         <h3>Dernières transactions</h3>
-        <div class="tx-list" id="txList">
+        <div class="tx-list" id="txList"></div>
+      </div>
+
+      <!-- Tab Espace Public avec Images et Liens -->
+      <div class="tab-content" id="tab-public">
+        <h3>Espace de Publication Public & Officiel</h3>
+        <p style="color:var(--y-gray)">Publiez vos textes, visuels et liens officiels visibles par toute la communauté.</p>
+
+        <div class="dash-card" style="background:#fff;">
+          <form onsubmit="handlePublish(event)">
+            <div class="input-group">
+              <label>Votre nom / Entité</label>
+              <input type="text" id="pubAuthor" required value="Adama Coulibaly">
+            </div>
+            <div class="input-group">
+              <label>Titre de la publication</label>
+              <input type="text" id="pubTitle" required placeholder="Ex: Nouveau produit disponible">
+            </div>
+            <div class="input-group">
+              <label>Contenu / Message</label>
+              <textarea id="pubContent" rows="3" required placeholder="Rédigez votre message ici..."></textarea>
+            </div>
+            <div class="input-group">
+              <label>Lien d'une Image / Photo (Optionnel)</label>
+              <input type="url" id="pubImageUrl" placeholder="https://exemple.com/image.jpg">
+            </div>
+            <div class="input-group">
+              <label>Lien Web Externe (Optionnel)</label>
+              <input type="url" id="pubLinkUrl" placeholder="https://votre-site.com">
+            </div>
+            <div style="display:flex; gap:10px; flex-wrap:wrap;">
+              <button type="submit" class="btn">🚀 Publier officiellement</button>
+              <button type="button" class="btn o" onclick="sharePublicSpace()">💖 Partager le site</button>
+            </div>
+          </form>
+        </div>
+
+        <h3>Fil d'actualité public</h3>
+        <div class="tx-list" id="publicFeed">
           <!-- Dynamique -->
         </div>
       </div>
 
       <!-- Tab Link -->
       <div class="tab-content" id="tab-link">
-        <h3>Votre lien de paiement personnel</h3>
-        <p style="color:var(--m)">Partagez ce lien à vos clients ou proches pour recevoir des paiements instantanés.</p>
+        <h3>Votre lien de paiement personnel 💖</h3>
+        <p style="color:var(--y-gray)">Partagez ce lien avec vos clients ou proches pour recevoir des paiements instantanés.</p>
         
         <div class="input-group">
           <label>Lien personnel Hoto</label>
@@ -531,33 +448,31 @@ footer a { color: var(--k); text-decoration: none; }
           </div>
         </div>
 
-        <div style="text-align:center; margin-top:30px; padding:20px; background:var(--c); border-radius:16px;">
-          <small style="display:block; font-weight:700; margin-bottom:10px;">Scanner pour me payer</small>
-          <img src="https://api.qrserver.com/v1/create-qr-code/?size=150x150&data=https://hoto.app/pay/@adama" alt="QR Code" style="border-radius:10px; border:2px solid var(--b);">
+        <div style="margin-top: 15px;">
+          <button class="btn" style="width: 100%; background: #e91e63;" onclick="shareHeartLink()">
+            💖 Partager mon lien avec un cœur
+          </button>
+        </div>
+
+        <div style="text-align:center; margin-top:20px; padding:15px; background:var(--y-light); border-radius:12px;">
+          <small style="display:block; font-weight:700; margin-bottom:8px;">Scanner pour me payer ❤️</small>
+          <img src="https://api.qrserver.com/v1/create-qr-code/?size=140x140&data=https://hoto.app/pay/@adama" alt="QR Code" style="border-radius:8px; border:1px solid var(--y-border);">
         </div>
       </div>
 
       <!-- Tab Pay Simulation -->
       <div class="tab-content" id="tab-pay">
         <h3>Simuler un paiement entrant</h3>
-        <p style="color:var(--m)">Testez comment un client vous envoie de l'argent depuis n'importe où dans le monde.</p>
+        <p style="color:var(--y-gray)">Testez un encaissement réel sur votre compte.</p>
 
-        <form id="payForm" onsubmit="handlePay(event)">
+        <form onsubmit="handlePay(event)">
           <div class="input-group">
             <label>Nom du payeur</label>
             <input type="text" id="payClient" required value="Jean Dupont">
           </div>
           <div class="input-group">
-            <label>Montant</label>
+            <label>Montant (FCFA)</label>
             <input type="number" id="payAmount" required value="5000">
-          </div>
-          <div class="input-group">
-            <label>Devise</label>
-            <select id="payCurrency">
-              <option value="XOF">Franc CFA (XOF)</option>
-              <option value="EUR">Euro (€)</option>
-              <option value="USD">Dollar US ($)</option>
-            </select>
           </div>
           <div class="input-group">
             <label>Moyen de paiement</label>
@@ -566,7 +481,6 @@ footer a { color: var(--k); text-decoration: none; }
               <option value="Orange Money">Orange Money</option>
               <option value="MTN Mobile Money">MTN Mobile Money</option>
               <option value="Carte Visa / Mastercard">Carte Visa / Mastercard</option>
-              <option value="Apple Pay">Apple Pay</option>
             </select>
           </div>
           <button type="submit" class="btn" style="width:100%;">Valider le paiement test</button>
@@ -576,12 +490,12 @@ footer a { color: var(--k); text-decoration: none; }
       <!-- Tab Withdraw -->
       <div class="tab-content" id="tab-withdraw">
         <h3>Retirer vers votre Mobile Money</h3>
-        <p style="color:var(--m)">Transfert sécurisé avec votre code PIN personnel.</p>
+        <p style="color:var(--y-gray)">Transfert sécurisé protégé par votre code PIN.</p>
 
         <div id="withdrawStep1">
           <div class="input-group">
-            <label>Numéro Mobile Money (Recepteur)</label>
-            <input type="tel" id="wPhone" placeholder="Ex: 0707070707" value="0707211737">
+            <label>Numéro Mobile Money</label>
+            <input type="tel" id="wPhone" value="0707211737">
           </div>
           <div class="input-group">
             <label>Opérateur</label>
@@ -589,7 +503,6 @@ footer a { color: var(--k); text-decoration: none; }
               <option value="Wave">Wave</option>
               <option value="Orange Money">Orange Money</option>
               <option value="MTN Money">MTN Money</option>
-              <option value="Moov Money">Moov Money</option>
             </select>
           </div>
           <div class="input-group">
@@ -626,12 +539,9 @@ footer a { color: var(--k); text-decoration: none; }
 
       <!-- Tab Inbox -->
       <div class="tab-content" id="tab-inbox">
-        <h3>Simulateur de Notifications Gmail</h3>
-        <p style="color:var(--m)">Chaque paiement déclenche un e-mail instantané dans votre boîte de réception.</p>
-        
-        <div class="tx-list" id="gmailList">
-          <!-- Dynamique -->
-        </div>
+        <h3>Notifications Gmail Officielles</h3>
+        <p style="color:var(--y-gray)">Historique des e-mails reçus pour chaque opération.</p>
+        <div class="tx-list" id="gmailList"></div>
       </div>
 
     </div>
@@ -639,12 +549,12 @@ footer a { color: var(--k); text-decoration: none; }
 </div>
 
 <script>
-// INITIALISATION SUPABASE AVEC VOS CLEFS OFFICIELLES
+// INITIALISATION SUPABASE
 const SUPABASE_URL = 'https://ecvikizyqztpbzimjeue.supabase.co';
 const SUPABASE_ANON_KEY = 'sb_publishable_9w6NUxn0jrYPhrVx3VUqOA_Zw3EsdTw';
 const _supabase = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
 
-// État local de secours
+// État Global de l'Application
 let state = {
   user: {
     name: "Adama Coulibaly",
@@ -657,10 +567,19 @@ let state = {
     { id: "TX-9981", client: "Marie K.", amount: 5000, type: "in", method: "Wave", date: "Aujourd'hui 10:14" },
     { id: "TX-9980", client: "Retrait Mobile Money", amount: 2000, type: "out", method: "Orange Money", date: "Hier 16:30" }
   ],
+  publications: [
+    { 
+      author: "Adama Coulibaly", 
+      title: "Bienvenue sur Hoto Officiel", 
+      content: "Plateforme ouverte à tous pour publier des médias et recevoir des paiements en toute sécurité.", 
+      imageUrl: "https://images.unsplash.com/photo-1556742049-0a67daf64f42?w=600&auto=format&fit=crop&q=60", 
+      linkUrl: "https://hoto.app", 
+      date: "Aujourd'hui" 
+    }
+  ],
   currentPin: ""
 };
 
-// Fonctions d'Ouverture et Navigation
 function openApp(tab = 'dash') {
   document.getElementById('appModal').classList.add('active');
   updateUI();
@@ -675,7 +594,8 @@ function switchTab(tabId) {
   document.querySelectorAll('.tab-btn').forEach(btn => btn.classList.remove('active'));
   document.querySelectorAll('.tab-content').forEach(content => content.classList.remove('active'));
   
-  const index = ['dash', 'link', 'pay', 'withdraw', 'inbox'].indexOf(tabId);
+  const tabs = ['dash', 'public', 'link', 'pay', 'withdraw', 'inbox'];
+  const index = tabs.indexOf(tabId);
   if(index !== -1) {
     document.querySelectorAll('.tab-btn')[index].classList.add('active');
   }
@@ -683,15 +603,14 @@ function switchTab(tabId) {
   document.getElementById(`tab-${tabId}`).classList.add('active');
 }
 
-// Mise à jour de l'interface graphique
 function updateUI() {
   document.getElementById('userName').textContent = state.user.name;
   document.getElementById('userEmail').textContent = state.user.email;
   document.getElementById('userAvatar').textContent = state.user.name.charAt(0);
   document.getElementById('userBalance').textContent = state.user.balance.toLocaleString() + " FCFA";
 
-  const txList = document.getElementById('txList');
-  txList.innerHTML = state.transactions.map(t => `
+  // Rendu Transactions
+  document.getElementById('txList').innerHTML = state.transactions.map(t => `
     <div class="tx-item">
       <div class="tx-info">
         <b>${t.client}</b>
@@ -703,12 +622,26 @@ function updateUI() {
     </div>
   `).join('');
 
-  const gmailList = document.getElementById('gmailList');
-  gmailList.innerHTML = state.transactions.filter(t => t.type === 'in').map(t => `
-    <div class="tx-item" style="background:#FBF3F2">
+  // Rendu Publications Publiques avec Images et Liens
+  document.getElementById('publicFeed').innerHTML = state.publications.map(p => `
+    <div class="tx-item" style="flex-direction:column; align-items:flex-start; gap:8px;">
+      <div style="display:flex; width:100%; justify-content:space-between; align-items:center;">
+        <b style="color:var(--y-blue); font-size:15px;">${p.title}</b>
+        <small>${p.date}</small>
+      </div>
+      <p style="margin:0; font-size:13px; color:var(--y-text);">${p.content}</p>
+      ${p.imageUrl ? `<img src="${p.imageUrl}" alt="Illustration" class="pub-img" onerror="this.style.display='none'">` : ''}
+      ${p.linkUrl ? `<a href="${p.linkUrl}" target="_blank" rel="noopener" class="pub-link">🔗 Voir le lien officiel : ${p.linkUrl}</a>` : ''}
+      <small style="color:var(--y-gray); margin-top:4px;">Publié par : <b>${p.author}</b></small>
+    </div>
+  `).join('');
+
+  // Rendu Gmail
+  document.getElementById('gmailList').innerHTML = state.transactions.filter(t => t.type === 'in').map(t => `
+    <div class="tx-item" style="background:#f3ebff">
       <div class="tx-info">
-        <b style="color:var(--r);">✉️ Paiement confirmé de ${t.client}</b>
-        <small>Reçu via Hoto (${t.method}) dans votre boîte ${state.user.email}</small>
+        <b style="color:var(--y-blue);">✉️ Paiement confirmé de ${t.client}</b>
+        <small>Reçu via Hoto (${t.method}) dans ${state.user.email}</small>
       </div>
       <span class="badge success">+${t.amount} FCFA</span>
     </div>
@@ -719,53 +652,77 @@ function copyLink() {
   const linkInput = document.getElementById('payLinkInput');
   linkInput.select();
   document.execCommand('copy');
-  alert("Lien de paiement copié !");
+  alert("Lien de paiement copié avec succès !");
 }
 
-// Enregistrement du paiement avec synchronisation Supabase
+function shareHeartLink() {
+  const link = document.getElementById('payLinkInput').value;
+  const text = `💖 Payez-moi facilement et en toute sécurité via Hoto : ${link}[cite: 1]`;
+  if (navigator.share) {
+    navigator.share({ title: 'Lien de paiement Hoto 💖', text: text, url: link }).catch(console.error);
+  } else {
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+  }
+}
+
+function sharePublicSpace() {
+  const text = `📢 Découvrez le portail officiel Hoto : publiez vos médias, partagez vos liens et recevez des paiements partout !`;
+  if (navigator.share) {
+    navigator.share({ title: 'Hoto Officiel', text: text, url: window.location.href }).catch(console.error);
+  } else {
+    window.open(`https://api.whatsapp.com/send?text=${encodeURIComponent(text)}`, '_blank');
+  }
+}
+
+function handlePublish(e) {
+  e.preventDefault();
+  const author = document.getElementById('pubAuthor').value;
+  const title = document.getElementById('pubTitle').value;
+  const content = document.getElementById('pubContent').value;
+  const imageUrl = document.getElementById('pubImageUrl').value;
+  const linkUrl = document.getElementById('pubLinkUrl').value;
+
+  state.publications.unshift({ author, title, content, imageUrl, linkUrl, date: "À l'instant" });
+
+  document.getElementById('pubTitle').value = '';
+  document.getElementById('pubContent').value = '';
+  document.getElementById('pubImageUrl').value = '';
+  document.getElementById('pubLinkUrl').value = '';
+
+  updateUI();
+  alert("Publication avec média ajoutée sur l'Espace Public !");
+}
+
 async function handlePay(e) {
   e.preventDefault();
   const client = document.getElementById('payClient').value;
   const amount = parseInt(document.getElementById('payAmount').value);
   const method = document.getElementById('payMethod').value;
 
-  const newTx = {
+  state.user.balance += amount;
+  state.transactions.unshift({
     id: "TX-" + Math.floor(1000 + Math.random() * 9000),
     client: client,
     amount: amount,
     type: "in",
     method: method,
     date: "À l'instant"
-  };
+  });
 
-  state.user.balance += amount;
-  state.transactions.unshift(newTx);
-
-  // Tentative de sauvegarde dans la base de données Supabase
   try {
-    await _supabase.from('transactions').insert([{
-      client_name: client,
-      amount: amount,
-      payment_method: method,
-      type: 'in'
-    }]);
-    console.log("Transaction enregistrée sur Supabase");
+    await _supabase.from('transactions').insert([{ client_name: client, amount: amount, payment_method: method, type: 'in' }]);
   } catch (err) {
-    console.log("Mode hors-ligne ou table non configurée", err);
+    console.log("Erreur de synchro Supabase", err);
   }
 
   updateUI();
-  alert(`Paiement de ${amount} FCFA reçu de ${client} ! Notification e-mail envoyée.`);
+  alert(`Paiement de ${amount} FCFA reçu de ${client} !`);
   switchTab('dash');
 }
 
-// Retrait & Code PIN
 function goToPin() {
   const amount = parseInt(document.getElementById('wAmount').value);
-  if(amount > state.user.balance) {
-    alert("Solde insuffisant !");
-    return;
-  }
+  if(amount > state.user.balance) { alert("Solde insuffisant !"); return; }
   document.getElementById('withdrawStep1').style.display = 'none';
   document.getElementById('withdrawStep2').style.display = 'block';
   state.currentPin = "";
@@ -773,16 +730,10 @@ function goToPin() {
 }
 
 function pressPin(num) {
-  if (state.currentPin.length < 4) {
-    state.currentPin += num;
-    updateDots();
-  }
+  if (state.currentPin.length < 4) { state.currentPin += num; updateDots(); }
 }
 
-function clearPin() {
-  state.currentPin = "";
-  updateDots();
-}
+function clearPin() { state.currentPin = ""; updateDots(); }
 
 function updateDots() {
   for (let i = 0; i < 4; i++) {
@@ -816,10 +767,7 @@ function submitWithdraw() {
     state.user.attempts++;
     alert(`Code PIN incorrect (${state.user.attempts}/3 essais). Code démo : 1234`);
     clearPin();
-    if(state.user.attempts >= 3) {
-      alert("Compte temporairement bloqué par sécurité (15 min).");
-      closeApp();
-    }
+    if(state.user.attempts >= 3) { alert("Compte temporairement bloqué (15 min)."); closeApp(); }
   }
 }
 </script>
